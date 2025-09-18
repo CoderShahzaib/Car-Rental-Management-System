@@ -26,6 +26,6 @@ export class Customers {
   }
 
   deleteCustomer(id: number): Observable<APIResponse>{
-    return this.http.delete<APIResponse>(`${this.url}/deleteCustomer?id=${id}`);
+    return this.http.delete<APIResponse>(`${this.url}/deletCustomer?id=${id}`);
   }
 }
