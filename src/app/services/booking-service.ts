@@ -9,21 +9,22 @@ import { environment } from '../../environments/environment';
   providedIn: 'root'
 })
 export class BookingService {
-  url = environment.apiUrl;
+  url = "/api"; 
   http = inject(HttpClient);
 
-  createBooking(booking: BookingFormModel): Observable<APIResponse> {
-    return this.http.post<APIResponse>(`${this.url}/CreateNewBooking`, booking);
+  getCars(): Observable<APIResponse> {
+    return this.http.get<APIResponse>(`${this.url}/cars`);
   }
 
-  getCars(): Observable<APIResponse> {
-    return this.http.get<APIResponse>(`${this.url}/GetCars`);
-  }
   getBookings(): Observable<APIResponse> {
-    return this.http.get<APIResponse>(`${this.url}/geAllBookings`);
+    return this.http.get<APIResponse>(`${this.url}/bookings`);
+  }
+
+  createBooking(booking: BookingFormModel): Observable<APIResponse> {
+    return this.http.post<APIResponse>(`${this.url}/createBooking`, booking);
   }
 
   deleteBooking(id: number): Observable<APIResponse> {
-    return this.http.delete<APIResponse>(`${this.url}/DeletBookingById?id=${id}`);
+    return this.http.delete<APIResponse>(`${this.url}/deleteBooking?id=${id}`);
   }
 }
