@@ -10,20 +10,22 @@ import { environment } from '../../environments/environment';
 })
 export class Customers {
   
-  http = inject(HttpClient)
-  url = environment.apiUrl;
+   http = inject(HttpClient)
+  url = "/api"; 
 
   getAllCustomers(): Observable<APIResponse>{
-    return this.http.get<APIResponse>(this.url+"/GetCustomers");
+    return this.http.get<APIResponse>(`${this.url}/customers`);
   }
 
   createNewCustomer(obj: CustomersModel): Observable<APIResponse>{
-    return this.http.post<APIResponse>(this.url+"/CreateNewCustomer", obj);
+    return this.http.post<APIResponse>(`${this.url}/createCustomer`, obj);
   }
+
   updateCustomer(obj: CustomersModel): Observable<APIResponse>{
-    return this.http.put<APIResponse>(this.url+"/UpdateCustomer", obj);
+    return this.http.put<APIResponse>(`${this.url}/updateCustomer`, obj);
   }
+
   deleteCustomer(id: number): Observable<APIResponse>{
-    return this.http.delete<APIResponse>(`${this.url}/DeletCustomerById?id=${id}`);
+    return this.http.delete<APIResponse>(`${this.url}/deleteCustomer?id=${id}`);
   }
 }
