@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiUrl: '/api'
+  apiUrl: "https://car-rental-management-system-seven.vercel.app/api"
 };
