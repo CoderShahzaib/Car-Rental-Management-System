@@ -4,13 +4,14 @@ import { inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { APIResponse } from '../../models/car';
 import { CustomersModel } from '../../models/customers';
+import { environment } from '../../environments/environment';
 @Injectable({
   providedIn: 'root'
 })
 export class Customers {
   
   http = inject(HttpClient)
-  url = "https://freeapi.miniprojectideas.com/api/CarRentalApp";
+  url = environment.apiUrl;
 
   getAllCustomers(): Observable<APIResponse>{
     return this.http.get<APIResponse>(this.url+"/GetCustomers");

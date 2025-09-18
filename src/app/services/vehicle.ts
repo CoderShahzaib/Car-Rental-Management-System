@@ -2,11 +2,12 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { APIResponse, CarModel } from '../../models/car';
 import { Observable } from 'rxjs';
+import { environment } from '../../environments/environment';
 @Injectable({
   providedIn: 'root'
 })
 export class Vehicle {
-  url = "https://freeapi.miniprojectideas.com/api/CarRentalApp";
+  url = environment.apiUrl;
 
   http = inject(HttpClient);
    onSaveCar(car: CarModel): Observable<APIResponse> {

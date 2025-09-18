@@ -3,12 +3,13 @@ import { HttpClient } from '@angular/common/http';
 import { BookingFormModel } from '../../models/booking';
 import { Observable } from 'rxjs';
 import { APIResponse } from '../../models/car';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BookingService {
-  url = "https://freeapi.miniprojectideas.com/api/CarRentalApp";
+  url = environment.apiUrl;
   http = inject(HttpClient);
 
   createBooking(booking: BookingFormModel): Observable<APIResponse> {
