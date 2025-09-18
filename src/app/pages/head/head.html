@@ -1,0 +1,96 @@
+<nav class="bg-white shadow-md px-6 py-3 flex items-center justify-between relative z-50">
+  <!-- Logo -->
+  <a routerLink="/vehicles">
+    <div class="flex items-center gap-3">
+      <img src="images/lg.png" alt="Logo" class="w-12 h-12" />
+      <span class="font-bold text-xl text-blue-600">Car Rental System</span>
+    </div>
+  </a>
+
+  <!-- Desktop Menu -->
+  <div class="hidden md:flex items-center gap-6 relative">
+    <a routerLink="/vehicles" class="text-gray-700 hover:text-blue-600 font-medium transition cursor-pointer"
+      routerLinkActive="!text-blue-600 !font-bold" [routerLinkActiveOptions]="{ exact: true }">
+      Vehicles
+    </a>
+
+    <a routerLink="/booking" class="text-gray-700 hover:text-blue-600 font-medium transition cursor-pointer"
+      routerLinkActive="!text-blue-600 !font-bold" [routerLinkActiveOptions]="{ exact: true }">
+      Booking
+    </a>
+
+    <a routerLink="/customers" class="text-gray-700 hover:text-blue-600 font-medium transition cursor-pointer"
+      routerLinkActive="!text-blue-600 !font-bold" [routerLinkActiveOptions]="{ exact: true }">
+      Customers
+    </a>
+
+    <!-- Search -->
+    <div class="relative">
+      <label for="desktopSearch" class="sr-only">Search booking by ID</label>
+      <input type="text" id="desktopSearch" name="desktopSearch" placeholder="Search booking by ID..."
+        [(ngModel)]="searchTerm" (input)="onSearch()" autocomplete="off"
+        class="border border-gray-300 rounded px-3 py-1 w-56 focus:outline-none focus:ring-2 focus:ring-blue-400 transition" />
+
+      @if (results.length > 0) {
+      <div class="absolute bg-white shadow-lg mt-1 w-full rounded-lg border border-gray-200 z-50">
+        @for (r of results; track r) {
+        <div class="px-4 py-2 hover:bg-gray-100 cursor-pointer" (click)="goToBooking(r.bookingId)">
+          <p class="font-medium">👤 {{ r.customerName }}</p>
+          <p class="text-sm text-gray-500">🚗 {{ r.customerCity }}</p>
+        </div>
+        }
+      </div>
+      }
+    </div>
+  </div>
+
+  <!-- Mobile Toggle Button -->
+  <button class="md:hidden p-2 rounded-md hover:bg-gray-100 z-50" (click)="toggleMenu()" aria-label="Toggle menu">
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+    </svg>
+  </button>
+</nav>
+
+<!-- ✅ Mobile Menu -->
+@if (isMenuOpen) {
+<div class="md:hidden fixed top-[64px] left-0 w-full bg-white shadow-md z-40">
+
+  <a routerLink="/vehicles" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 hover:text-blue-600 font-medium"
+    routerLinkActive="!text-blue-600 !font-bold" [routerLinkActiveOptions]="{ exact: true }" (click)="toggleMenu()">
+    Vehicles
+  </a>
+
+  <a routerLink="/booking" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 hover:text-blue-600 font-medium"
+    routerLinkActive="!text-blue-600 !font-bold" [routerLinkActiveOptions]="{ exact: true }" (click)="toggleMenu()">
+    Booking
+  </a>
+
+  <a routerLink="/customers" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 hover:text-blue-600 font-medium"
+    routerLinkActive="!text-blue-600 !font-bold" [routerLinkActiveOptions]="{ exact: true }" (click)="toggleMenu()">
+    Customers
+  </a>
+
+  <!-- ✅ Mobile Search -->
+  <div class="p-3 border-t border-gray-200 relative">
+    <label for="mobileSearch" class="sr-only">Search booking by ID</label>
+    <input type="text" id="mobileSearch" name="mobileSearch" placeholder="Search booking by ID..."
+      [(ngModel)]="searchTerm" (input)="onSearch()" autocomplete="off"
+      class="border border-gray-300 rounded px-3 py-1 w-full focus:outline-none focus:ring-2 focus:ring-blue-400 transition" />
+
+    @if (results.length > 0) {
+    <div class="absolute bg-white shadow-lg mt-1 w-full rounded-lg border border-gray-200 z-50">
+      @for (r of results; track r) {
+      <div class="px-4 py-2 hover:bg-gray-100 cursor-pointer" (click)="goToBooking(r.bookingId)">
+        <p class="font-medium">👤 {{ r.customerName }}</p>
+        <p class="text-sm text-gray-500">🚗 {{ r.customerCity }}</p>
+      </div>
+      }
+    </div>
+    }
+  </div>
+</div>
+}
+
+
+<router-outlet></router-outlet>

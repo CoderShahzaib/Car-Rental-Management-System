@@ -1,0 +1,97 @@
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 grid grid-cols-1 lg:grid-cols-3 gap-6">
+  <div class="lg:col-span-2 bg-white shadow rounded-lg p-4">
+    <div class="flex justify-between items-center mb-4">
+      <h1 class="text-xl font-bold flex items-center gap-2">
+        <span class="material-icons">groups</span>
+        Customer List
+      </h1>
+      <button
+        class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded flex items-center gap-1"
+        (click)="onRefreshCustomers()">
+        <span class="material-icons text-sm">refresh</span> Refresh
+      </button>
+    </div>
+
+    <div class="overflow-x-auto">
+      <table class="min-w-full divide-y divide-gray-200">
+        <thead class="bg-gray-50">
+          <tr>
+            <th class="px-4 py-2 text-left text-xs font-semibold text-gray-500 uppercase">#</th>
+            <th class="px-4 py-2 text-left text-xs font-semibold text-gray-500 uppercase">Name</th>
+            <th class="px-4 py-2 text-left text-xs font-semibold text-gray-500 uppercase">City</th>
+            <th class="px-4 py-2 text-left text-xs font-semibold text-gray-500 uppercase">Mobile</th>
+            <th class="px-4 py-2 text-left text-xs font-semibold text-gray-500 uppercase">Email</th>
+            <th class="px-4 py-2 text-center text-xs font-semibold text-gray-500 uppercase">Actions</th>
+          </tr>
+        </thead>
+        <tbody class="bg-white divide-y divide-gray-200">
+          @for(c of customersList; track c.customerId){
+          <tr class="hover:bg-gray-50">
+            <td class="px-4 py-2">{{c.customerId}}</td>
+            <td class="px-4 py-2 font-semibold">{{c.customerName}}</td>
+            <td class="px-4 py-2">{{c.customerCity}}</td>
+            <td class="px-4 py-2">{{c.mobileNo}}</td>
+            <td class="px-4 py-2">{{c.email}}</td>
+            <td class="px-4 py-2 flex gap-2 justify-center">
+              <button (click)="editCustomer(c)"
+                class="bg-yellow-400 hover:bg-yellow-500 text-white px-2 py-1 rounded flex items-center gap-1">
+                <span class="material-icons text-sm">edit</span>
+              </button>
+              <button (click)="deleteCustomer(c.customerId)"
+                class="bg-red-500 hover:bg-red-600 text-white px-2 py-1 rounded flex items-center gap-1">
+                <span class="material-icons text-sm">delete</span>
+              </button>
+            </td>
+          </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="bg-white shadow rounded-lg p-4">
+    <h2 class="text-lg font-bold flex items-center gap-2 mb-4">
+      <span class="material-icons">person_add</span>
+      Add / Update Customer
+    </h2>
+
+    <form class="space-y-3">
+      <div>
+        <label class="block text-sm font-medium text-gray-600">Name</label>
+        <input [(ngModel)]="customerObj.customerName" name="customerName" type="text" placeholder="Enter name"
+          class="w-full border rounded px-3 py-2 mt-1 focus:ring focus:ring-blue-300" />
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-gray-600">City</label>
+        <input [(ngModel)]="customerObj.customerCity" name="customerCity" placeholder="Enter city"
+          class="w-full border rounded px-3 py-2 mt-1 focus:ring focus:ring-blue-300" />
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-gray-600">Mobile</label>
+        <input [(ngModel)]="customerObj.mobileNo" name="mobileNo" type="text" placeholder="Enter mobile no"
+          class="w-full border rounded px-3 py-2 mt-1 focus:ring focus:ring-blue-300" />
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-gray-600">Email</label>
+        <input [(ngModel)]="customerObj.email" name="email" type="email" placeholder="Enter email"
+          class="w-full border rounded px-3 py-2 mt-1 focus:ring focus:ring-blue-300" />
+      </div>
+      <div class="flex justify-end gap-3 mt-4">
+        @if(customerObj.customerId == 0){
+          <button type="button" (click)="createCustomer(customerObj)"
+          class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded shadow flex items-center gap-1">
+          <span class="material-icons text-sm">save</span> Save
+        </button>
+        } @else {
+          <button type="button" (click)="updateCustomer(customerObj)"
+          class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded shadow flex items-center gap-1">
+          <span class="material-icons text-sm"></span> Update
+        </button>
+        }
+        <button type="reset" (click)="onClear()"
+          class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded shadow flex items-center gap-1">
+          <span class="material-icons text-sm">clear</span> Clear
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
