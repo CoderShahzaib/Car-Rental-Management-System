@@ -14,7 +14,7 @@ export class Vehicle {
     return this.http.post<APIResponse>(this.url+"/CreateNewCar", car);
   }
   getCars(): Observable<APIResponse>{
-    return this.http.get<APIResponse>(this.url+"/GetCars");
+    return this.http.get<APIResponse>(this.url+"/cars");
   }
   updateCars(car: CarModel): Observable<APIResponse> {
     return this.http.put<APIResponse>(this.url+"/UpdateCar", car);
