@@ -18,14 +18,14 @@ export class Customers {
   }
 
   createNewCustomer(obj: CustomersModel): Observable<APIResponse>{
-    return this.http.post<APIResponse>(`${this.url}/CreateNewCustomer`, obj);
+    return this.http.post<APIResponse>(`${this.url}/createCustomer`, obj);
   }
 
   updateCustomer(obj: CustomersModel): Observable<APIResponse>{
-    return this.http.put<APIResponse>(`${this.url}/UpdateCustomer`, obj);
+    return this.http.put<APIResponse>(`${this.url}/updateCustomer`, obj);
   }
 
   deleteCustomer(id: number): Observable<APIResponse>{
-    return this.http.delete<APIResponse>(`${this.url}/DeletCustomer?id=${id}`);
+    return this.http.delete<APIResponse>(`${this.url}/deleteCustomer?id=${id}`);
   }
 }
