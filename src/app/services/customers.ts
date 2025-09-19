@@ -18,7 +18,7 @@ export class Customers {
   }
 
   createNewCustomer(obj: CustomersModel): Observable<APIResponse>{
-    return this.http.post<APIResponse>(`${this.url}/createCustomer`, obj);
+    return this.http.post<APIResponse>(`${this.url}/createCustomers`, obj);
   }
 
   updateCustomer(obj: CustomersModel): Observable<APIResponse> {

@@ -17,7 +17,7 @@ export class BookingService {
   }
 
   getBookings(): Observable<APIResponse> {
-    return this.http.get<APIResponse>(`${this.url}/bookings`);
+    return this.http.get<APIResponse>(`${this.url}/booking`);
   }
 
   createBooking(booking: BookingFormModel): Observable<APIResponse> {
