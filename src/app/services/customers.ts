@@ -21,11 +21,12 @@ export class Customers {
     return this.http.post<APIResponse>(`${this.url}/createCustomer`, obj);
   }
 
-  updateCustomer(obj: CustomersModel): Observable<APIResponse>{
-    return this.http.put<APIResponse>(`${this.url}/updateCustomer`, obj);
-  }
+  updateCustomer(obj: CustomersModel): Observable<APIResponse> {
+  return this.http.put<APIResponse>(`${this.url}/updateCustomer`, obj);
+}
 
-  deleteCustomer(id: number): Observable<APIResponse>{
-    return this.http.delete<APIResponse>(`${this.url}/deleteCustomer?id=${id}`);
-  }
+deleteCustomer(id: number): Observable<APIResponse> {
+  return this.http.delete<APIResponse>(`${this.url}/deleteCustomer?id=${id}`);
+}
+
 }
