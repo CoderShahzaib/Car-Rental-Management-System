@@ -8,7 +8,7 @@ import { environment } from '../../environments/environment';
 })
 export class SearchService {
   http = inject(HttpClient);
-  url = environment.apiUrl + "/GetBookingByBookingId";
+  url = environment.apiUrl + "/searchBooking"; // call your Vercel proxy
 
   getBookingById(id: number): Observable<APIResponse> {
     return this.http.get<APIResponse>(`${this.url}?bookingId=${id}`);
