@@ -1,15 +1,15 @@
 export class CustomersModel {
-  customerId: number
+  id: number
   customerName: string
   customerCity: string
-  mobileNo: string
-  email: string
+  mobileNumber: string
+  customerEmail: string
 
   constructor() {
-    this.customerId = 0
+    this.id = 0
     this.customerName = ''
     this.customerCity = ''
-    this.mobileNo = ''
-    this.email = ''
+    this.mobileNumber = ''
+    this.customerEmail = ''
   }
 }

@@ -1,13 +1,8 @@
 export interface Search {
-  custId: number
+  id: number
   customerName: string
-  customerCity: string
-  mobileNo: string
-  email: string
-  bookingId: number
-  carId: number
-  bookingDate: string
-  discount: number
+  carModel: string
+  startDate: string
+  endDate: string
   totalBillAmount: number
-  bookingUid: string
 }

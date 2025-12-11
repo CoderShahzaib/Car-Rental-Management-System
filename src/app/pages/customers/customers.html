@@ -25,19 +25,19 @@
           </tr>
         </thead>
         <tbody class="bg-white divide-y divide-gray-200">
-          @for(c of customersList; track c.customerId){
+          @for(c of customersList; track c.id){
           <tr class="hover:bg-gray-50">
-            <td class="px-4 py-2">{{c.customerId}}</td>
+            <td class="px-4 py-2">{{c.id}}</td>
             <td class="px-4 py-2 font-semibold">{{c.customerName}}</td>
             <td class="px-4 py-2">{{c.customerCity}}</td>
-            <td class="px-4 py-2">{{c.mobileNo}}</td>
-            <td class="px-4 py-2">{{c.email}}</td>
+            <td class="px-4 py-2">{{c.mobileNumber}}</td>
+            <td class="px-4 py-2">{{c.customerEmail}}</td>
             <td class="px-4 py-2 flex gap-2 justify-center">
               <button (click)="editCustomer(c)"
                 class="bg-yellow-400 hover:bg-yellow-500 text-white px-2 py-1 rounded flex items-center gap-1">
                 <span class="material-icons text-sm">edit</span>
               </button>
-              <button (click)="deleteCustomer(c.customerId)"
+              <button (click)="deleteCustomer(c.id)"
                 class="bg-red-500 hover:bg-red-600 text-white px-2 py-1 rounded flex items-center gap-1">
                 <span class="material-icons text-sm">delete</span>
               </button>
@@ -67,22 +67,22 @@
       </div>
       <div>
         <label class="block text-sm font-medium text-gray-600">Mobile</label>
-        <input [(ngModel)]="customerObj.mobileNo" name="mobileNo" type="text" placeholder="Enter mobile no"
+        <input [(ngModel)]="customerObj.mobileNumber" name="mobileNo" type="text" placeholder="Enter mobile no"
           class="w-full border rounded px-3 py-2 mt-1 focus:ring focus:ring-blue-300" />
       </div>
       <div>
         <label class="block text-sm font-medium text-gray-600">Email</label>
-        <input [(ngModel)]="customerObj.email" name="email" type="email" placeholder="Enter email"
+        <input [(ngModel)]="customerObj.customerEmail" name="email" type="email" placeholder="Enter email"
           class="w-full border rounded px-3 py-2 mt-1 focus:ring focus:ring-blue-300" />
       </div>
       <div class="flex justify-end gap-3 mt-4">
-        @if(customerObj.customerId == 0){
+        @if(customerObj.id == 0){
           <button type="button" (click)="createCustomer(customerObj)"
           class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded shadow flex items-center gap-1">
           <span class="material-icons text-sm">save</span> Save
         </button>
         } @else {
-          <button type="button" (click)="updateCustomer(customerObj)"
+          <button type="button" (click)="updateCustomer(customerObj.id, customerObj)"
           class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded shadow flex items-center gap-1">
           <span class="material-icons text-sm"></span> Update
         </button>

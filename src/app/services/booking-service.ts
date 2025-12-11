@@ -3,28 +3,28 @@ import { HttpClient } from '@angular/common/http';
 import { BookingFormModel } from '../../models/booking';
 import { Observable } from 'rxjs';
 import { APIResponse } from '../../models/car';
-import { environment } from '../../environments/environment';
+import { environment } from '../../environments/environment.prod';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BookingService {
-  url = "/api"; 
+  private url = environment.apiUrl; 
   http = inject(HttpClient);
 
   getCars(): Observable<APIResponse> {
-    return this.http.get<APIResponse>(`${this.url}/cars`);
+    return this.http.get<APIResponse>(`${this.url}/Cars`);
   }
 
   getBookings(): Observable<APIResponse> {
-    return this.http.get<APIResponse>(`${this.url}/booking`);
+    return this.http.get<APIResponse>(`${this.url}/Bookings`);
   }
 
   createBooking(booking: BookingFormModel): Observable<APIResponse> {
-    return this.http.post<APIResponse>(`${this.url}/createBooking`, booking);
+    return this.http.post<APIResponse>(`${this.url}/Bookings`, booking);
   }
 
   deleteBooking(id: number): Observable<APIResponse> {
-    return this.http.delete<APIResponse>(`${this.url}/deleteBooking?id=${id}`);
+    return this.http.delete<APIResponse>(`${this.url}/Bookings/${id}`);
   }
 }

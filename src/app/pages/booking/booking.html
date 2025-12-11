@@ -1,5 +1,6 @@
 <div class="grid grid-cols-1 md:grid-cols-3 gap-6 p-6 bg-gray-50 min-h-screen">
 
+  <!-- ===================== BOOKING LIST ===================== -->
   <div class="md:col-span-2 bg-white shadow-lg rounded-2xl overflow-hidden">
     <div class="flex justify-between items-center bg-yellow-500 text-white p-4">
       <h2 class="font-bold text-lg flex items-center gap-2">📋 Booking List</h2>
@@ -10,117 +11,102 @@
     </div>
 
     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 p-4">
-      @for(b of bookingList; track b){
+      @for(b of bookingList; track b) {
       <div class="bg-white border-l-4 border-yellow-500 shadow-md p-4 rounded-lg hover:shadow-lg transition">
+        <h3 class="font-bold text-lg">📌 Booking # {{ b.id }}</h3>
         <h3 class="font-bold text-lg">👤 {{ b.customerName }}</h3>
-        <p class="text-gray-700">🚗 {{ b.model }}</p>
-        <p class="text-gray-700">📞 {{ b.mobileNo }}</p>
-        <p class="text-gray-700">💸 Discount: {{ b.discount }}%</p>
-        <p class="text-gray-700">📅 {{ b.bookingDate | date: 'dd-MM-yyyy' }}</p>
-        <p class="font-bold text-green-600">💵 Bill: {{ b.totalBillAmount | currency }}</p>
-        <button (click)="deleteBooking(b.bookingId)" class="bg-red-500 text-white px-4 py-2 rounded-lg shadow 
-               hover:bg-red-600 transition w-full sm:w-auto mt-2">
-  Delete
-</button>
+        <p class="text-gray-700">🚗 Car Model: {{ b.carModel }}</p>
+
+        <p class="text-gray-700">📅 Start: {{ b.startDate | date: 'dd-MM-yyyy' }}</p>
+        <p class="text-gray-700">📅 End: {{ b.endDate | date: 'dd-MM-yyyy' }}</p>
+
+        <p class="font-bold text-green-600">💵 Total: {{ b.totalAmount }} Pkr</p>
+
+        <button 
+          (click)="deleteBooking(b.id)" 
+          class="bg-red-500 text-white px-4 py-2 rounded-lg shadow 
+                 hover:bg-red-600 transition w-full sm:w-auto mt-2">
+          Delete
+        </button>
+
       </div>
       }
     </div>
   </div>
 
+
+  <!-- ===================== ADD / UPDATE FORM ===================== -->
   <div class="bg-white shadow-lg rounded-2xl overflow-hidden">
     <div class="bg-yellow-500 text-white p-4 font-bold text-lg">➕ Add / Update Booking</div>
 
-    <form [formGroup]="bookingForm" class="p-6 grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm"
+    <form [formGroup]="bookingForm"
+      class="p-6 grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm"
       (ngSubmit)="createNewBooking()">
 
+      <!-- Customer Name -->
       <div class="col-span-2">
-        <input type="text" formControlName="CustomerName" placeholder="Enter name"
+        <input type="text" formControlName="customerId" placeholder="Enter Customer Id"
           class="border p-2 rounded w-full focus:ring-2 focus:ring-yellow-400 outline-none" />
-        @if(bookingForm.get('CustomerName')?.invalid && bookingForm.get('CustomerName')?.touched){
-        <div class="text-red-500 text-xs mt-1 flex items-center gap-1">
-          ⚠️ @if(bookingForm.get('CustomerName')?.errors?.['required']){ Name is required }
-          @if(bookingForm.get('CustomerName')?.errors?.['minlength']){ Name must be at least 3 characters }
+
+        @if(bookingForm.get('customerId')?.invalid && bookingForm.get('customerId')?.touched) {
+        <div class="text-red-500 text-xs mt-1">⚠️ Customer Id is required</div>
+        }
+      </div>
+      <!-- Customer Name -->
+      <div class="col-span-2">
+        <input type="text" formControlName="carId" placeholder="Enter Car Id"
+          class="border p-2 rounded w-full focus:ring-2 focus:ring-yellow-400 outline-none" />
+
+        @if(bookingForm.get('carId')?.invalid && bookingForm.get('carId')?.touched) {
+        <div class="text-red-500 text-xs mt-1">⚠️ Car Id is required</div>
+        }
+      </div>
+      <!-- Start Date -->
+      <div>
+        <input type="date" formControlName="startDate"
+          class="border p-2 rounded w-full focus:ring-2 focus:ring-yellow-400 outline-none" />
+
+        @if(bookingForm.get('startDate')?.invalid && bookingForm.get('startDate')?.touched) {
+        <div class="text-red-500 text-xs mt-1">⚠️ Start date required</div>
+        }
+      </div>
+
+      <!-- End Date -->
+      <div>
+        <input type="date" formControlName="endDate"
+          class="border p-2 rounded w-full focus:ring-2 focus:ring-yellow-400 outline-none" />
+
+        @if(bookingForm.get('endDate')?.invalid && bookingForm.get('endDate')?.touched) {
+        <div class="text-red-500 text-xs mt-1">⚠️ End date required</div>
+        }
+      </div>
+
+      <!-- Amount -->
+      <div class="col-span-2">
+        <input type="number" formControlName="totalAmount" placeholder="Total Amount"
+          class="border p-2 rounded w-full focus:ring-2 focus:ring-yellow-400 outline-none" />
+
+        @if(bookingForm.get('totalAmount')?.invalid && bookingForm.get('totalAmount')?.touched) {
+        <div class="text-red-500 text-xs mt-1">
+          ⚠️ Amount must be greater than 0
         </div>
         }
       </div>
 
-      <div>
-        <input type="text" formControlName="CustomerCity" placeholder="Enter city"
-          class="border p-2 rounded w-full focus:ring-2 focus:ring-yellow-400 outline-none" />
-        @if(bookingForm.get('CustomerCity')?.invalid && bookingForm.get('CustomerCity')?.touched){
-        <div class="text-red-500 text-xs mt-1 flex items-center gap-1">⚠️ City is required</div>
-        }
-      </div>
-
-      <div>
-        <input type="text" formControlName="MobileNo" placeholder="Enter mobile no"
-          class="border p-2 rounded w-full focus:ring-2 focus:ring-yellow-400 outline-none" />
-        @if(bookingForm.get('MobileNo')?.invalid && bookingForm.get('MobileNo')?.touched){
-        <div class="text-red-500 text-xs mt-1 flex items-center gap-1">
-          ⚠️ @if(bookingForm.get('MobileNo')?.errors?.['required']){ Mobile number is required }
-          @if(bookingForm.get('MobileNo')?.errors?.['minlength']){ Must be at least 10 digits }
-        </div>
-        }
-      </div>
-
-      <div class="col-span-2">
-        <input type="email" formControlName="Email" placeholder="Enter email"
-          class="border p-2 rounded w-full focus:ring-2 focus:ring-yellow-400 outline-none" />
-        @if(bookingForm.get('Email')?.invalid && bookingForm.get('Email')?.touched){
-        <div class="text-red-500 text-xs mt-1 flex items-center gap-1">
-          ⚠️ @if(bookingForm.get('Email')?.errors?.['required']){ Email is required }
-          @if(bookingForm.get('Email')?.errors?.['email']){ Enter a valid email }
-        </div>
-        }
-      </div>
-
-      <div class="col-span-2">
-        <select formControlName="CarId"
-          class="border p-2 rounded w-full focus:ring-2 focus:ring-yellow-400 outline-none">
-          <option value="" disabled selected>-- Select Car --</option>
-          @for(car of carList; track car){
-          <option [value]="car.carId">{{ car.brand }} (ID: {{ car.carId }})</option>
-          }
-        </select>
-        @if(bookingForm.get('CarId')?.invalid && bookingForm.get('CarId')?.touched){
-        <div class="text-red-500 text-xs mt-1 flex items-center gap-1">⚠️ Car selection is required</div>
-        }
-      </div>
-
-      <div>
-        <input type="date" formControlName="BookingDate"
-          class="border p-2 rounded w-full focus:ring-2 focus:ring-yellow-400 outline-none" />
-        @if(bookingForm.get('BookingDate')?.invalid && bookingForm.get('BookingDate')?.touched){
-        <div class="text-red-500 text-xs mt-1 flex items-center gap-1">⚠️ Date is required</div>
-        }
-      </div>
-
-      <div>
-        <input type="number" formControlName="Discount" placeholder="Discount (%)"
-          class="border p-2 rounded w-full focus:ring-2 focus:ring-yellow-400 outline-none" />
-      </div>
-
-      <div class="col-span-2">
-        <input type="number" formControlName="TotalBillAmount" placeholder="Amount"
-          class="border p-2 rounded w-full focus:ring-2 focus:ring-yellow-400 outline-none" />
-        @if(bookingForm.get('TotalBillAmount')?.invalid && bookingForm.get('TotalBillAmount')?.touched){
-        <div class="text-red-500 text-xs mt-1 flex items-center gap-1">
-          ⚠️ @if(bookingForm.get('TotalBillAmount')?.errors?.['required']){ Amount is required }
-          @if(bookingForm.get('TotalBillAmount')?.errors?.['min']){ Amount must be greater than 0 }
-        </div>
-        }
-      </div>
-
+      <!-- Buttons -->
       <div class="col-span-2 flex justify-end gap-3 mt-4">
         <button type="submit"
           class="bg-yellow-500 text-white px-5 py-2 rounded-lg shadow hover:bg-yellow-600 transition">
           💾 Save
         </button>
+
         <button type="button" (click)="onClear()"
           class="bg-gray-600 text-white px-5 py-2 rounded-lg shadow hover:bg-gray-700 transition">
           ❌ Clear
         </button>
       </div>
+
     </form>
   </div>
+
 </div>

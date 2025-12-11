@@ -24,7 +24,6 @@
       Customers
     </a>
 
-    <!-- Search -->
     <div class="relative">
       <label for="desktopSearch" class="sr-only">Search booking by ID</label>
       <input type="text" id="desktopSearch" name="desktopSearch" placeholder="Search booking by ID..."
@@ -34,9 +33,9 @@
       @if (results.length > 0) {
       <div class="absolute bg-white shadow-lg mt-1 w-full rounded-lg border border-gray-200 z-50">
         @for (r of results; track r) {
-        <div class="px-4 py-2 hover:bg-gray-100 cursor-pointer" (click)="goToBooking(r.bookingId)">
+        <div class="px-4 py-2 hover:bg-gray-100 cursor-pointer" (click)="goToBooking(r.id)">
           <p class="font-medium">👤 {{ r.customerName }}</p>
-          <p class="text-sm text-gray-500">🚗 {{ r.customerCity }}</p>
+          <p class="text-sm text-gray-500">🚗 {{ r.carModel }}</p>
         </div>
         }
       </div>
@@ -44,7 +43,6 @@
     </div>
   </div>
 
-  <!-- Mobile Toggle Button -->
   <button class="md:hidden p-2 rounded-md hover:bg-gray-100 z-50" (click)="toggleMenu()" aria-label="Toggle menu">
     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
@@ -52,7 +50,6 @@
   </button>
 </nav>
 
-<!-- ✅ Mobile Menu -->
 @if (isMenuOpen) {
 <div class="md:hidden fixed top-[64px] left-0 w-full bg-white shadow-md z-40">
 
@@ -71,7 +68,6 @@
     Customers
   </a>
 
-  <!-- ✅ Mobile Search -->
   <div class="p-3 border-t border-gray-200 relative">
     <label for="mobileSearch" class="sr-only">Search booking by ID</label>
     <input type="text" id="mobileSearch" name="mobileSearch" placeholder="Search booking by ID..."
@@ -81,9 +77,9 @@
     @if (results.length > 0) {
     <div class="absolute bg-white shadow-lg mt-1 w-full rounded-lg border border-gray-200 z-50">
       @for (r of results; track r) {
-      <div class="px-4 py-2 hover:bg-gray-100 cursor-pointer" (click)="goToBooking(r.bookingId)">
+      <div class="px-4 py-2 hover:bg-gray-100 cursor-pointer" (click)="goToBooking(r.id)">
         <p class="font-medium">👤 {{ r.customerName }}</p>
-        <p class="text-sm text-gray-500">🚗 {{ r.customerCity }}</p>
+        <p class="text-sm text-gray-500">🚗 {{ r.carModel }}</p>
       </div>
       }
     </div>

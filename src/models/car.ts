@@ -5,7 +5,7 @@ export class CarModel {
     year: number;
     color: string;
     dailyRate: number;
-    regNo: string;
+    registrationNo: string;
     carImage: string;
 
     constructor(){
@@ -15,7 +15,7 @@ export class CarModel {
         this.year = 0;
         this.color = "";
         this.dailyRate = 0;
-        this.regNo = "";
+        this.registrationNo = "";
         this.carImage = "";
     }
 }

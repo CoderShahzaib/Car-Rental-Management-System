@@ -15,8 +15,8 @@ export class CustomersComponent {
   customerObj = new CustomersModel();
   customerSrv = inject(Customers) 
 
-  updateCustomer(customer: CustomersModel) {
-    this.customerSrv.updateCustomer(customer).subscribe((res: APIResponse) => {
+  updateCustomer(Id: number,customer: CustomersModel) {
+    this.customerSrv.updateCustomer(Id, customer).subscribe((res: APIResponse) => {
       if (res.data) {
         alert('Customer updated successfully');
         this.onRefreshCustomers();

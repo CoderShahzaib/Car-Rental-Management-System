@@ -28,8 +28,8 @@ export class Vehicles {
   onRefresh(){
     this.getAllCars();
   }
-  updateVehicle(car: CarModel){
-    this.carService.updateCars(car).subscribe((res: APIResponse) => {
+  updateVehicle(Id: number, car: CarModel){
+    this.carService.updateCars(Id, car).subscribe((res: APIResponse) => {
       if (res.result) {
         alert("Vehicle updated successfully");
         this.getAllCars();
@@ -50,7 +50,7 @@ export class Vehicles {
     });    
   }
   onSave() {
-    this.carService.onSaveCar(this.newCarObj).subscribe((res: APIResponse) => {
+    this.carService.onSaveCar(this.newCarObj).subscribe((res : APIResponse) => {
       if (res.result) {
         alert("Vehicle saved successfully");
         this.onClear();

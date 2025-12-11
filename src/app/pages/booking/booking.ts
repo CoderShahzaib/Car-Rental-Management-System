@@ -1,9 +1,14 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { BookingModel, BookingFormModel } from '../../../models/booking';
 import { BookingService } from '../../services/booking-service';
-import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  FormControl,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { APIResponse, CarModel } from '../../../models/car';
+import { APIResponse } from '../../../models/car';
 
 @Component({
   selector: 'app-booking',
@@ -14,34 +19,21 @@ import { APIResponse, CarModel } from '../../../models/car';
 })
 export class Booking implements OnInit {
   bookingList: BookingModel[] = [];
-  carList: CarModel[] = [];
   bookingService = inject(BookingService);
 
   bookingForm: FormGroup = new FormGroup({
-    CustomerName: new FormControl('', [Validators.required, Validators.minLength(3)]),
-    CustomerCity: new FormControl('', Validators.required),
-    MobileNo: new FormControl('', [
-      Validators.required,
-      Validators.pattern(/^\d{10}$/),
-      Validators.minLength(10),
-    ]),
-    Email: new FormControl('', [
-      Validators.required,
-      Validators.email,
-      Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/),
-    ]),
-    BookingId: new FormControl(0),
-    CarId: new FormControl('', Validators.required),
-    BookingDate: new FormControl('', Validators.required),
-    Discount: new FormControl(0),
-    TotalBillAmount: new FormControl(0, [Validators.required, Validators.min(1)]),
+    customerId: new FormControl<number | null>(null, Validators.required),
+    carId: new FormControl<number | null>(null, Validators.required),
+    startDate: new FormControl('', Validators.required),
+    endDate: new FormControl('', Validators.required),
+    totalAmount: new FormControl(0, [Validators.required, Validators.min(1)]),
   });
 
   ngOnInit() {
     this.getAllBookings();
-    this.getAllCars();
   }
 
+  // ✅ Create a new booking
   createNewBooking() {
     if (this.bookingForm.invalid) {
       alert('Please fill required fields.');
@@ -50,49 +42,43 @@ export class Booking implements OnInit {
 
     const fv = this.bookingForm.value;
 
-    const bookingData = {
-      CustomerName: fv.CustomerName || '',
-      CustomerCity: fv.CustomerCity || '',
-      MobileNo: fv.MobileNo || '',
-      Email: fv.Email || '',
-      BookingId: fv.BookingId || 0,
-      CarId: fv.CarId ? Number(fv.CarId) : 0,
-      BookingDate: fv.BookingDate
-        ? new Date(fv.BookingDate).toISOString().split('T')[0] // 🚨 just date part
-        : new Date().toISOString().split('T')[0],
-      Discount: fv.Discount || 0,
-      TotalBillAmount: fv.TotalBillAmount || 0,
+    const bookingData: BookingFormModel = {
+      customerId: Number(fv.customerId),
+      carId: Number(fv.carId),
+      startDate: new Date(fv.startDate).toISOString(),
+      endDate: new Date(fv.endDate).toISOString(),
+      totalAmount: Number(fv.totalAmount),
     };
 
-    console.log('Payload sent to API:', bookingData);
+    console.log('Payload sent:', bookingData);
 
     this.bookingService.createBooking(bookingData).subscribe({
       next: (res) => {
-        console.log('API response:', res);
         if (res && (res as any).result) {
           alert('Booking created successfully');
           this.bookingForm.reset();
           this.getAllBookings();
-          this.bookingForm.reset({
-            CarId: '',
-          });
         } else {
-          alert((res as any).message || 'Server returned no result field.');
+          alert((res as any).message || 'Unknown server response');
         }
       },
 
       error: (err) => {
-        console.error('API error status:', err.status);
-        console.error('API error body:', err.error);
-        alert('Booking failed — see console (err.error) for details.');
+        console.error('API ERROR:', err.error);
+        alert('Booking failed (check console).');
       },
     });
   }
-  getAllCars() {
-    this.bookingService.getCars().subscribe((res: APIResponse) => {
-      this.carList = res.data;
+
+  // ✅ Fetch all bookings
+  getAllBookings() {
+    this.bookingService.getBookings().subscribe((res: APIResponse) => {
+      this.bookingList = res.data;
+      console.log('Bookings:', this.bookingList);
     });
   }
+
+  // ✅ Delete booking
   deleteBooking(id: number) {
     this.bookingService.deleteBooking(id).subscribe((res: APIResponse) => {
       if (res.result) {
@@ -103,19 +89,9 @@ export class Booking implements OnInit {
       }
     });
   }
-  onRefresh() {
-    this.getAllBookings();
-  }
-  getAllBookings() {
-    this.bookingService.getBookings().subscribe((res: APIResponse) => {
-      this.bookingList = res.data;
-    });
-  }
 
+  // Clear form
   onClear() {
     this.bookingForm.reset();
-    this.bookingForm.reset({
-      CarId: '',
-    });
   }
 }

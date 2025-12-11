@@ -4,29 +4,29 @@ import { inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { APIResponse } from '../../models/car';
 import { CustomersModel } from '../../models/customers';
-import { environment } from '../../environments/environment';
+import { environment } from '../../environments/environment.prod';
 @Injectable({
   providedIn: 'root'
 })
 export class Customers {
   
    http = inject(HttpClient)
-  url = "/api"; 
+   private url = environment.apiUrl; 
 
   getAllCustomers(): Observable<APIResponse>{
-    return this.http.get<APIResponse>(`${this.url}/customers`);
+    return this.http.get<APIResponse>(`${this.url}/Customers`);
   }
 
   createNewCustomer(obj: CustomersModel): Observable<APIResponse>{
-    return this.http.post<APIResponse>(`${this.url}/createCustomers`, obj);
+    return this.http.post<APIResponse>(`${this.url}/Customers`, obj);
   }
 
-  updateCustomer(obj: CustomersModel): Observable<APIResponse> {
-  return this.http.put<APIResponse>(`${this.url}/updateCustomers`, obj);
+  updateCustomer(Id: number,obj: CustomersModel): Observable<APIResponse> {
+  return this.http.put<APIResponse>(`${this.url}/Customers/${Id}`, obj);
 }
 
 deleteCustomer(id: number): Observable<APIResponse> {
-  return this.http.delete<APIResponse>(`${this.url}/deleteCustomers?id=${id}`);
+  return this.http.delete<APIResponse>(`${this.url}/Customers/${id}`);
 }
 
 }

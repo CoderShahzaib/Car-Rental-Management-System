@@ -1,8 +1,6 @@
-
 <h1
   class="text-3xl font-bold text-center bg-gradient-to-r from-blue-600 to-indigo-600 
-         text-white py-5 px-3 rounded-b-3xl shadow-lg 
-         animate-fade-in"
+         text-white py-5 px-3 rounded-b-3xl shadow-lg animate-fade-in"
 >
   Booking Details
 </h1>
@@ -14,23 +12,29 @@
            transform transition duration-500 hover:scale-[1.02] animate-slide-up"
   >
     <div class="grid grid-cols-1 sm:grid-cols-2 gap-y-4 gap-x-6 text-gray-700">
+      
       <p class="font-semibold">📌 Booking ID:</p>
-      <p class="text-gray-900">{{ booking.bookingId }}</p>
+      <p class="text-gray-900">{{ booking.id }}</p>
+
+      <p class="font-semibold">🚗 Car Model:</p>
+      <p class="text-gray-900">{{ booking.carModel }}</p>
 
       <p class="font-semibold">👤 Customer Name:</p>
       <p class="text-gray-900">{{ booking.customerName }}</p>
 
-      <p class="font-semibold">📞 Mobile No:</p>
-      <p class="text-gray-900">{{ booking.mobileNo }}</p>
+      <p class="font-semibold">📅 Start Date:</p>
+      <p class="text-gray-900">{{ booking.startDate }}</p>
 
-      <p class="font-semibold">💸 Discount:</p>
-      <p class="text-green-600 font-medium">{{ booking.discount }}%</p>
+      <p class="font-semibold">📅 End Date:</p>
+      <p class="text-gray-900">{{ booking.endDate }}</p>
 
       <p class="font-semibold">💰 Total Amount:</p>
       <p class="text-blue-600 font-bold text-lg">
-        {{ booking.totalBillAmount}}
+        {{ booking.totalAmount }} Pkr
       </p>
+
     </div>
+
     <div class="flex justify-center pt-4">
       <a
         routerLink="/booking"
@@ -42,13 +46,11 @@
       </a>
     </div>
   </div>
+
 } @else {
-  <ng-template #notFound>
-    <div
-      class="text-center mt-10 text-gray-600 animate-fade-in"
-    >
-      <p class="text-xl font-semibold">Booking not found 🚫</p>
-    </div>
-  </ng-template>
+  <div class="text-center mt-10 text-gray-600 animate-fade-in">
+    <p class="text-xl font-semibold">Booking not found 🚫</p>
+  </div>
 }
+
 <router-outlet></router-outlet>

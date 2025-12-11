@@ -34,8 +34,8 @@
         <td class="px-4 py-2">{{car.model}}</td>
         <td class="px-4 py-2">{{car.year}}</td>
         <td class="px-4 py-2">{{car.color}}</td>
-        <td class="px-4 py-2">{{car.dailyRate}}</td>
-        <td class="px-4 py-2">{{car.regNo}}</td>
+        <td class="px-4 py-2">{{car.dailyRate}} Pkr</td>
+        <td class="px-4 py-2">{{car.registrationNo}}</td>
         <td class="px-4 py-2">
           <img [src]="car.carImage" alt="car" class="w-12 h-10 object-cover rounded" />
         </td>
@@ -87,7 +87,7 @@
       </div>
       <div>
         <label class="block text-sm font-medium text-gray-600">Reg. No</label>
-        <input [(ngModel)]="newCarObj.regNo" name="regNo" type="text" placeholder="Enter reg no"
+        <input [(ngModel)]="newCarObj.registrationNo" name="regNo" type="text" placeholder="Enter reg no"
           class="w-full border rounded px-3 py-2 mt-1 focus:ring focus:ring-blue-300"/>
       </div>
       <div>
@@ -101,7 +101,7 @@
         Save Vehicle
       </button>
       } @else {
-        <button type="button" (click)="updateVehicle(newCarObj)"
+        <button type="button" (click)="updateVehicle(newCarObj.carId, newCarObj)"
         class="w-full bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded">
         Update Vehicle
       </button>
